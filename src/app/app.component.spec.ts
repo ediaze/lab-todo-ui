@@ -20,17 +20,4 @@ describe('AppComponent', () => {
     let app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
-
-  it('should have a newTodo todo', () => {
-    let fixture = TestBed.createComponent(AppComponent);
-    let app = fixture.debugElement.componentInstance;
-    expect(app.newTodo instanceof TodoItemDto).toBeTruthy()
-  });
-
-  it('should display "Todos" in h1 tag', () => {
-    let fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    let compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Todos');
-  });
 });
