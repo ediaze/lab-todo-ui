@@ -22,8 +22,8 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
   // API: GET /todos
-  public getAllTodos(): Observable<TodoItemDto> {
-    return this.http.get<TodoItemDto>(this.endPoint)
+  public getAllTodos(): Observable<TodoItemDto[]> {
+    return this.http.get<TodoItemDto[]>(this.endPoint)
       .pipe(
         retry(1),
         catchError(this.handleError)
