@@ -1,19 +1,24 @@
 {
-    "todos": [
-        {
-            "id": 1,
-            "name": "Read SitePoint article",
-            "isComplete": false
-        },
-        {
-            "id": 2,
-            "name": "Clean inbox",
-            "isComplete": false
-        },
-        {
-            "id": 3,
-            "name": "Make restaurant reservation",
-            "isComplete": false
-        }
-    ]
+  "todoItems": [
+    {
+      "id": 1,
+      "name": "Read SitePoint article",
+      "isComplete": false
+    },
+    {
+      "id": 3,
+      "name": "Make restaurant reservation",
+      "isComplete": false
+    },
+    {
+      "name": "Preparar la comida",
+      "isComplete": false,
+      "id": 4
+    },
+    {
+      "name": "Demo con David",
+      "isComplete": true,
+      "id": 6
+    }
+  ]
 }

@@ -1,9 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { TodoItemDto } from './shared/dtos/todo-item-dto';
-import { ApiService } from './shared/services/api.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TodoDataService } from './shared/services/todo-data.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -15,7 +14,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-      providers: [ ApiService ]
+      providers: [ TodoDataService ]
     }).compileComponents();
   });
 

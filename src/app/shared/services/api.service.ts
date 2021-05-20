@@ -11,7 +11,7 @@ import { TodoItemDto } from '../dtos/todo-item-dto';
 })
 export class ApiService {
 
-  endPoint = environment.apiUrl + '/todos';
+  endPoint = environment.apiUrl + '/todoItems';
 
   httpHeader = {
     headers: new HttpHeaders({
@@ -66,16 +66,16 @@ export class ApiService {
     )
   }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(failure: HttpErrorResponse) {
     let message = '';
-    if (error.status === 0) {
-      message = `A client-side or network error occurred: ${error.error}`;
+    if (failure.status === 0) {
+      message = `A client-side or network error occurred: ${failure.error}`;
     } else {
-      if(error.error instanceof ErrorEvent) {
-        message = error.error.message;
+      if(failure.error instanceof ErrorEvent) {
+        message = failure.error.message;
       } else {
-        let details = error.message ? error.message : error.error;
-        message = `Server side error. Error Code: ${error.status}, Message: ${details}`;
+        let details = failure.message ? failure.message : failure.error;
+        message = `Server side error. Error Code: ${failure.status}, Message: ${details}`;
       }
     }
     console.error(message);

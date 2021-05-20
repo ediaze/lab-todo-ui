@@ -178,9 +178,12 @@ label[for='toggle-all'] {
 	top: 0;
 	bottom: 0;
 	margin: auto 0;
-	border: none; /* Mobile Safari */
+	border: 1px solid #ddd; /* Mobile Safari */
 	-webkit-appearance: none;
 	appearance: none;
+	cursor: pointer;
+	background-color: gray;
+	border-radius: 80%;
 }
 
 .todo-list li .toggle:after {

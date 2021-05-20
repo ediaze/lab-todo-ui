@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { TodoItemDto } from '../dtos/todo-item-dto';
+import { ApiMockService } from './api-mock.service';
 import { ApiService } from './api.service';
 
 import { TodoDataService } from './todo-data.service';
@@ -12,113 +13,18 @@ describe('TodoDataService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule ],
-      providers: [ ApiService ]
+      providers: [
+        TodoDataService,
+        {
+          provide: ApiService,
+          useClass: ApiMockService
+        }
+      ]
     });
     service = TestBed.inject(TodoDataService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });
-
-  describe('#save(todo)', () => {
-    it('should automatically assign an incrementing id', () => {
-      let todo1: TodoItemDto = {name: 'Hello 1', isComplete: false};
-      let todo2: TodoItemDto = {name: 'Hello 2', isComplete: true};
-      service.addTodo(todo1);
-      service.addTodo(todo2);
-      service.getTodoById(1).subscribe(data => {
-        expect(data).toEqual(todo1);
-      });
-      service.getTodoById(2).subscribe(data => {
-        expect(data).toEqual(todo2);
-      });
-    });
-  });
-
-  describe('#deleteTodoById(id)', () => {
-    it('should remove todo with the corresponding id', () => {
-      let todo1: TodoItemDto = {name: 'Hello 1', isComplete: false};
-      let todo2: TodoItemDto = {name: 'Hello 2', isComplete: true};
-      service.addTodo(todo1);
-      service.addTodo(todo2);
-      service.getAllTodos().subscribe(todos => {
-        expect(todos).toEqual([todo1, todo2]);
-      });
-      service.deleteTodoById(1);
-      service.getAllTodos().subscribe(todos => {
-        expect(todos).toEqual([todo2]);
-      });
-      service.deleteTodoById(2);
-      service.getAllTodos().subscribe(todos => {
-        expect(todos).toEqual([]);
-      });
-    });
-
-    it('should not removing anything if todo with corresponding id is not found', () => {
-      let todo1: TodoItemDto = {name: 'Hello 1', isComplete: false};
-      let todo2: TodoItemDto = {name: 'Hello 2', isComplete: true};
-      service.addTodo(todo1);
-      service.addTodo(todo2);
-      service.getAllTodos().subscribe(todos => {
-        expect(todos).toEqual([todo1, todo2]);
-      });
-      service.deleteTodoById(3);
-      service.getAllTodos().subscribe(todos => {
-        expect(todos).toEqual([todo1, todo2]);
-      });
-    });
-  });
-
-  describe('#getAllTodos()', () => {
-    it('should return an empty array by default', () => {
-      service.getAllTodos().subscribe(todos => {
-        expect(todos).toEqual([]);
-      });
-    });
-
-    it('should return all todos', () => {
-      let todo1: TodoItemDto = {name: 'Hello 1', isComplete: false};
-      let todo2: TodoItemDto = {name: 'Hello 2', isComplete: true};
-      service.addTodo(todo1);
-      service.addTodo(todo2);
-      service.getAllTodos().subscribe(todos => {
-        expect(todos).toEqual([todo1, todo2]);
-      });
-    });
-  });
-
-  describe('#updateTodoById(id, values)', () => {
-    it('should return todo with the corresponding id and updated data', () => {
-      let todo: TodoItemDto = {name: 'Hello 1', isComplete: false};
-      service.addTodo(todo).subscribe(todo => {
-        todo.name = 'new title';
-        service.updateTodo(todo).subscribe(updatedTodo => {
-          expect(updatedTodo.name).toEqual('new title');
-        });
-      });
-    });
-
-    it('should return null if todo is not found', () => {
-      let todo: TodoItemDto = {name: 'Hello 1', isComplete: false};
-      service.addTodo(todo).subscribe(entry => {
-        entry.id = 2;
-        entry.name = 'new title';
-        service.updateTodo(entry).subscribe(updatedTodo => {
-          expect(updatedTodo).toEqual(null);
-        });
-      });
-    });
-  });
-
-  describe('#toggleTodoComplete(todo)', () => {
-    it('should return the updated todo with inverse complete status', () => {
-      let todo: TodoItemDto = {name: 'Hello 1', isComplete: false};
-      service.addTodo(todo).subscribe(entry => {
-        service.toggleTodoComplete(entry).subscribe(updatedTodo => {
-          expect(updatedTodo.isComplete).toEqual(true);
-        });
-      });
-    });
   });
 });
