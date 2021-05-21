@@ -1,20 +1,26 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ApiMockService } from './shared/services/api-mock.service';
+import { ApiService } from './shared/services/api.service';
 import { TodoDataService } from './shared/services/todo-data.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        HttpClientTestingModule
-      ],
       declarations: [
         AppComponent
       ],
-      providers: [ TodoDataService ]
+      providers: [
+        TodoDataService,
+        {
+          provide: ApiService,
+          useClass: ApiMockService
+        }
+      ],
+      schemas: [
+        NO_ERRORS_SCHEMA
+      ]
     }).compileComponents();
   });
 

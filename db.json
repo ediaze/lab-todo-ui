@@ -1,3 +1,44 @@
 {
-  "todoItems": []
+  "todoItems": [
+    {
+      "id": 1,
+      "name": "The Ultimate Angular CLI Reference Guide",
+      "isComplete": true
+    },
+    {
+      "id": 2,
+      "name": "Getting our first version of the Todo application up and running",
+      "isComplete": true
+    },
+    {
+      "id": 3,
+      "name": "Creating separate components to display a list of todos",
+      "isComplete": true
+    },
+    {
+      "id": 4,
+      "name": "Update the Todo service to communicate with a REST API",
+      "isComplete": true
+    },
+    {
+      "id": 5,
+      "name": "Use Angular Router to resolve data",
+      "isComplete": false
+    },
+    {
+      "id": 6,
+      "name": "Add authentication to protect private content",
+      "isComplete": false
+    },
+    {
+      "id": 7,
+      "name": "How to Update Angular Projects to the latest version",
+      "isComplete": false
+    },
+    {
+      "name": "Implement some test",
+      "isComplete": false,
+      "id": 8
+    }
+  ]
 }

@@ -11,8 +11,8 @@ import { TodoItemDto } from '../dtos/todo-item-dto';
 })
 export class ApiService {
 
-  // endPoint = environment.apiUrl + '/todoItems';
-  endPoint = environment.apiUrl + '/api/todoItems';
+  endPoint = environment.apiUrl + '/todoItems';
+  // endPoint = environment.apiUrl + '/api/todoItems';
 
   httpHeader = {
     headers: new HttpHeaders({
