@@ -17,24 +17,24 @@ export class TodosComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.todoDataService.getAllTodos().subscribe((data) => {
-      this.todos = data;
+    this.route.data.subscribe((resolveData) => {
+      this.todos = resolveData.message;
     });
   }
 
-  onAddTodo(todo: TodoItemDto) {
-    this.todoDataService.addTodo(todo).subscribe((data) => {
-      this.todos = this.todos.concat(data);
+  onAddTodo(todo: TodoItemDto): void {
+    this.todoDataService.addTodo(todo).subscribe((newTodo) => {
+      this.todos = this.todos.concat(newTodo);
     });
   }
 
-  onToggleTodoComplete(todo: TodoItemDto) {
-    this.todoDataService.toggleTodoComplete(todo).subscribe((data) => {
-      todo = data;
+  onToggleTodoComplete(todo: TodoItemDto): void {
+    this.todoDataService.toggleTodoComplete(todo).subscribe((updatedTodo) => {
+      todo = updatedTodo;
     });
   }
 
-  onRemoveTodo(todo: TodoItemDto) {
+  onRemoveTodo(todo: TodoItemDto): void {
     this.todoDataService.deleteTodoById(todo.id).subscribe((_) => {
       this.todos = this.todos.filter((t) => t.id !== todo.id);
     });
