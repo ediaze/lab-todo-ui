@@ -19,3 +19,12 @@ https://www.remotestack.io/angular-httpclient-service-example-tutorial/
 # you can use concurrently to run both commands concurrently without opening multiple terminal windows or tabs.
 https://github.com/kimmobrunfeldt/concurrently
 npm install -g concurrently
+
+# Let’s start by installing the body-parser npm module, which we’ll need to parse the JSON in our HTTP requests:
+npm install --save body-parser
+
+Change:
+"json-server": "json-server --watch db.json",
+
+By;
+"json-server": "node json-server.js"

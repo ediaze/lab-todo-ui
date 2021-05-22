@@ -4,27 +4,49 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
+import { LoginDto } from '../dtos/login-dto';
 import { TodoItemDto } from '../dtos/todo-item-dto';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  endPoint = environment.apiUrl + '/todoItems';
+  baseUrl = environment.apiUrl;
+  endPoint = this.baseUrl + '/todoItems';
   // endPoint = environment.apiUrl + '/api/todoItems';
 
-  httpHeader = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
+  constructor(
+    private http: HttpClient,
+    private session: SessionService) {
   }
 
-  constructor(private http: HttpClient) { }
+  private getRequestOptions() {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.session.accessToken
+      })
+    };
+    return httpOptions;
+  }
+
+  public signIn(username: string, password: string) {
+    return this.http.post<LoginDto>(this.baseUrl + '/sign-in', {
+        username,
+        password
+      })
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
+  }
 
   // API: GET /todos
   public getAllTodos(): Observable<TodoItemDto[]> {
-    return this.http.get<TodoItemDto[]>(this.endPoint)
+    const options = this.getRequestOptions();
+    return this.http.get<TodoItemDto[]>(this.endPoint, options)
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -33,7 +55,8 @@ export class ApiService {
 
   // API: GET /todos/:id
   public getTodoById(todoId: number): Observable<TodoItemDto> {
-    return this.http.get<TodoItemDto>(`${this.endPoint}/${todoId}`)
+    const options = this.getRequestOptions();
+    return this.http.get<TodoItemDto>(`${this.endPoint}/${todoId}`, options)
     .pipe(
       retry(1),
       catchError(this.handleError)
@@ -42,7 +65,8 @@ export class ApiService {
 
   // API: POST /todos
   public createTodo(todo: TodoItemDto) {
-    return this.http.post<TodoItemDto>(this.endPoint, JSON.stringify(todo), this.httpHeader)
+    const options = this.getRequestOptions();
+    return this.http.post<TodoItemDto>(this.endPoint, JSON.stringify(todo), options)
     .pipe(
       retry(1),
       catchError(this.handleError)
@@ -51,7 +75,8 @@ export class ApiService {
 
   // API: PUT /todos/:id
   public updateTodo(todo: TodoItemDto) {
-    return this.http.put<TodoItemDto>(`${this.endPoint}/${todo.id}`, JSON.stringify(todo), this.httpHeader)
+    const options = this.getRequestOptions();
+    return this.http.put<TodoItemDto>(`${this.endPoint}/${todo.id}`, JSON.stringify(todo), options)
     .pipe(
       retry(1),
       catchError(this.handleError)
@@ -60,7 +85,8 @@ export class ApiService {
 
   // DELETE /todos/:id
   public deleteTodoById(todoId: number) {
-    return this.http.delete<TodoItemDto>(`${this.endPoint}/${todoId}`, this.httpHeader)
+    const options = this.getRequestOptions();
+    return this.http.delete<TodoItemDto>(`${this.endPoint}/${todoId}`, options)
     .pipe(
       retry(1),
       catchError(this.handleError)

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ApiService } from './shared/services/api.service';
 import { TodosComponent } from './modules/todos/todos.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -22,13 +23,15 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     TodoListItemComponent,
     TodoListFooterComponent,
     TodosComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SignInComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [TodoDataService, ApiService],
   bootstrap: [AppComponent]
