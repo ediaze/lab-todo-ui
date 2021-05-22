@@ -18,7 +18,7 @@ export class TodosComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe((resolveData) => {
-      this.todos = resolveData.message;
+      this.todos = (resolveData && resolveData.message) ? resolveData.message : [];
     });
   }
 
